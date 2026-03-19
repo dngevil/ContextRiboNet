@@ -1,4 +1,4 @@
-setwd("E:/projects/合作课题/亢雨笺/ContextRiboNet/")
+setwd("E:/projects/ContextRiboNet/")
 library(data.table)
 library(ggplot2)
 library(dplyr)
