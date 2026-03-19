@@ -1,5 +1,5 @@
 QUERY="../result/cnn_mlp_add_cellstate/single_label_v1/kernels/pwm_selected/meme_selected.txt"
-TARGET="/home/lijy/ref/jaspar/JASPAR2024_CORE_vertebrates_nr.meme"
+TARGET="/home/dngevil/ref/jaspar/JASPAR2024_CORE_vertebrates_nr.meme"
 OUTDIR="../result/cnn_mlp_add_cellstate/single_label_v1/kernels/tomtom_jaspar_v2024"
 
 mkdir -p "${OUTDIR}"
