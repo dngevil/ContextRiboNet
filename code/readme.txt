@@ -1,4 +1,4 @@
-下载数据
+##Download data
 wget ftp://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz
 wget ftp://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
 wget ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz
@@ -31,7 +31,7 @@ python build_model_inputs.py \
 
 
 
-RNAseq与ribo之间的关系
+##The relationship between RNA seq and ribo
 python RNAseq_vs_Riboseq.py \
   --rna_path  ../data/GSE197265_h_GVtohESC_28500_RNA_merge_average_fpkm.txt \
   --ribo_path ../data/GSE197265_h_GVtohESC_28500_Ribo_merge_average_fpkm.txt \
@@ -39,7 +39,7 @@ python RNAseq_vs_Riboseq.py \
   --dedup \
   --log1p
 
-基于分析不同周期的细胞系的特征偏好
+##Based on the analysis of the characteristic preferences of cell lines at different life cycles
 
 python analyze_lasso_contrib_by_stage.py \
   --npz ../preprocess_data/pipeline_out/model_inputs_cds_lenle5000_withRNA.npz \
@@ -50,7 +50,7 @@ python analyze_lasso_contrib_by_stage.py \
   --top_k_plot 40 --relative --pdf_all
 
 
-增加细胞系状态刻画
+##Increase cell line state characterization
 python train_cnn_mlp_add_cellstate.py \
   --npz    ../preprocess_data/pipeline_out/model_inputs_cds_lenle5000_withRNA.npz \
   --outdir ../result/cnn_mlp_add_cellstate/single_label_v1 \
@@ -62,10 +62,10 @@ python train_cnn_mlp_add_cellstate.py \
   --test_ratio_per_stage 0.2 --val_ratio_in_train 0.2 \
   --seed 42
 
-针对增加细胞系状态刻画的
+##For increasing the characterization of cell line states
 python extract_kernels_and_scores_add_cellstate.py   --npz ../preprocess_data/pipeline_out/model_inputs_cds_lenle5000_withRNA.npz   --ckpt ../result/cnn_mlp_add_cellstate/single_label_v1/best.pt   --outdir ../result/cnn_mlp_add_cellstate/single_label_v1/kernels   --split_mode per_gene   --test_ratio_per_stage 0.2   --val_ratio_in_train 0.2   --seed 42   --kernel_sizes 6 10 12 16 20   --cnn_channels 64   --mlp_hidden 128 --mlp_blocks 3 --dropout 0.1   --topk_per_kernel 500 --min_hits 100 --save_meme
 
-##针对图3的补充分析
+## Supplementary Analysis of Figure 3
 python export_pwms_for_figure3.py \
   --npz ../preprocess_data/pipeline_out/model_inputs_cds_lenle5000_withRNA.npz \
   --ckpt ../result/cnn_mlp_add_cellstate/single_label_v1/best.pt \
@@ -85,7 +85,7 @@ python make_figure3.py \
 
 
 
-根据高分kernel筛选motif，然后获取每个motif在每条序列上的扫描分数。
+##Motifs are filtered based on high-scoring kernels, and then the scan score of each motif on each sequence is obtained.
 python scan_motif_hits_figure3.py \
   --npz  ./preprocess_data/pipeline_out/model_inputs_cds_lenle5000_withRNA.npz \
   --ckpt ./result/cnn_mlp_add_cellstate/single_label_v1/best.pt \
